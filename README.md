@@ -66,6 +66,7 @@
 - Создал cr и crd согласно документации в интернете для новой apiVersion
 - Написал свой operator согласно инструкции
 
+```
 export MYSQLPOD=$(kubectl get pods -l app=mysql-instance -o jsonpath="{.items[*].metadata.name}")
 kubectl exec -it $MYSQLPOD -- mysql -potuspassword -e "select * from test;" otus-database
 +----+-------------+
@@ -80,3 +81,13 @@ kubectl exec -it $MYSQLPOD -- mysql -potuspassword -e "select * from test;" otus
 kubectl get jobs
 NAME COMPLETIONS DURATION AGE
 restore-mysql-instance-job 1/1 10s 8m44s
+```
+
+
+## Kubernetes-Monitoring
+
+- Создан кластер kind
+- Создан костомный контейнер nginx
+- Написан деплоймент с контейнером nginx-exporter
+- Написан сервис
+- Написан сервисмонитор согласно интрукции
