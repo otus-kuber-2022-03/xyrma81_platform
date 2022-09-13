@@ -91,3 +91,51 @@ restore-mysql-instance-job 1/1 10s 8m44s
 - Написан деплоймент с контейнером nginx-exporter
 - Написан сервис
 - Написан сервисмонитор согласно интрукции
+
+## Kubernetes-Logging
+
+Развернут кластер в яндекс облаке
+otus@linux:~$ kubectl get nodes
+
+```
+NAME STATUS ROLES AGE VERSION
+cl1i8i4254toic9otp36-ixuz Ready 3m10s v1.20.11
+cl1psh2gs2jl8gst29di-oxyk Ready 2m47s v1.20.11
+cl1psh2gs2jl8gst29di-upaf Ready 2m53s v1.20.11
+cl1psh2gs2jl8gst29di-uvam Ready 2m50s v1.20.11
+```
+
+Установлены микросервисы.
+
+```
+otus@linux:~$ kubectl get pods -n microservices-demo -o wide
+NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES
+adservice-56d56d89cc-t9wcc 0/1 ContainerCreating 0 50s cl1i8i4254toic9otp36-ixuz
+cartservice-c8b9fc586-l4pr8 0/1 ContainerCreating 0 51s cl1i8i4254toic9otp36-ixuz
+checkoutservice-74f4c5464f-9cxtt 1/1 Running 0 52s 10.112.128.9 cl1i8i4254toic9otp36-ixuz
+currencyservice-7df4d74b7c-rqjfj 0/1 ContainerCreating 0 50s cl1i8i4254toic9otp36-ixuz
+emailservice-86794489df-b7pqb 1/1 Running 0 53s 10.112.128.8 cl1i8i4254toic9otp36-ixuz
+frontend-cf49f7975-x56cj 0/1 ContainerCreating 0 52s cl1i8i4254toic9otp36-ixuz
+loadgenerator-7fdb874b-r6vh5 0/1 ContainerCreating 0 50s cl1i8i4254toic9otp36-ixuz
+paymentservice-5768d9bb67-p2k5c 0/1 ContainerCreating 0 51s cl1i8i4254toic9otp36-ixuz
+productcatalogservice-84fd74ccc9-9xgq6 0/1 ContainerCreating 0 51s cl1i8i4254toic9otp36-ixuz
+recommendationservice-6fcb597467-cbbwp 0/1 ContainerCreating 0 52s cl1i8i4254toic9otp36-ixuz
+redis-cart-55d76945cb-bwktg 0/1 ContainerCreating 0 50s cl1i8i4254toic9otp36-ixuz
+shippingservice-6bc75ffff-lcj7s 0/1 ContainerCreating 0 50s cl1i8i4254toic9otp36-ixuz
+```
+
+Установлены средством helm
+- elasticsearch
+- kibana
+- fluent-bit
+
+Установлен prometheus-operator в неймспейс observability
+
+Установилен loki
+
+```
+helm repo add loki https://grafana.github.io/loki/charts
+helm repo update
+helm upgrade --install loki loki/loki-stack --namespace observability -f loki.values.yaml
+```
+
