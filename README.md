@@ -139,3 +139,34 @@ helm repo update
 helm upgrade --install loki loki/loki-stack --namespace observability -f loki.values.yaml
 ```
 
+## Kubernetes-Gitops
+
+Развернут кластер в yc
+Создан репозиторий в https://gitlab.com/Xyrma/microservices-demo/
+Скпированы туда готовые чарты из https://gitlab.com/express42/kubernetes-platform-demo/microservices-demo/
+Создан .gitlab-ci.yaml
+Собраны из запушены образы для каждого микросервиса в докерхаб
+Установлен в кластер helmrelease
+```
+kubectl apply -f https://raw.githubusercontent.com/fluxcd/helmoperator/master/deploy/flux-helm-release-crd.yaml
+```
+добавлен репо
+```
+helm repo add fluxcd https://charts.fluxcd.io/
+```
+Установлен flux
+Установлен helm операртор
+установлен fluxctl на лоакальную машину
+
+```
+kubectl get helmrelease -n microservices-demo
+NAME RELEASE PHASE STATUS MESSAGE AGE
+frontend frontend Succeeded deployed Release was successful for Helm release 'frontend' in 'microservices-demo'. 46m
+```
+
+Установлен flagger
+```
+helm repo add flagger https://flagger.app/
+kubectl apply -f https://raw.githubusercontent.com/weaveworks/flagger/master/artifacts/flagger/crd.yaml
+helm upgrade --install flagger flagger/flagger
+```
