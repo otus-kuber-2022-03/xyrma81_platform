@@ -372,3 +372,10 @@ eOqgnSmTzYSud1a0yuOg+wWYjps6XIxqXTQaApI5YjXxbg2Dm0C9
 -----END RSA PRIVATE KEY-----
 private_key_type    rsa
 serial_number       7b:1f:11:a9:b5:aa:5b:67:c8:5d:b0:37:f2:9b:49:07:d9:c0:db:a7
+```
+
+## Kubernetes-Storege
+
+- Подготовлен файл cluster.yaml с необходимой конфигурацией для kind;
+- В директории hw созданы манифесты для создания объектов StorageClass, pvc и pod;
+- Задание со * - развернут iscsi (добавлен диск lvm), в под добавлен volume iscsi.
